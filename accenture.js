@@ -3,6 +3,14 @@
 // make a function that takes an array and produces an output array that has the product
 // of every member of the original array EXCEPT the current index as the current index
 
+const makeProd = array => {
+  let product = 1
+  for(let i = 0; i < array.length; i++){
+    product *= array[i]
+  }
+  return product
+}
+
 const multArray = input => {
   // handle edge case of multiple zeroes
   const zeroes = input.filter(elem => elem === 0)
@@ -13,22 +21,14 @@ const multArray = input => {
     let zeroArray = new Array(input.length).fill(0)
     for(let k = 0; k < input.length; k++){
       if(input[k] === 0){
-        let nonZeroArray = [...input.slice(0,k), ...input.slice(k + 1, input.length)]
-        console.log(nonZeroArray)
-        let product = 1
-        for(let l = 0; l < nonZeroArray.length; l++){
-          product *= nonZeroArray[l]
-        }
+        let product = makeProd(input.slice(0, k)) * makeProd(input.slice(k + 1, input.length))
         zeroArray[k] = product
       }
     }
     return zeroArray
   } else {
     // non-zero array, main case, 2n solution
-    let product = 1
-    for(let i = 0; i < input.length; i++){
-      product *= input[i]
-    }
+    let product = makeProd(input)
 
     let returnArray = []
     for(let j = 0; j < input.length; j++){
@@ -37,6 +37,3 @@ const multArray = input => {
     return returnArray
   }
 }
-
-const zA = [1,2,0,3]
-console.log(multArray(zA))
